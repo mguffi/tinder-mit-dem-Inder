@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Filter</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Spezifische Stile für die Filterseite */
+        .user-card {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-image {
+            max-width: 80px;
+            max-height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .like-button,
+        .dislike-button {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+
+        .like-button {
+            background-color: lightgreen;
+        }
+
+        .like-button.liked {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        .dislike-button {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Filter Users</h1>
+
+        <form id="filter-form">
+            <div>
+                <label for="gender">Geschlecht:</label>
+                <select id="gender" name="gender">
+                    <option value="">Alle</option>
+                    <option value="Männlich">Männlich</option>
+                    <option value="Weiblich">Weiblich</option>
+                    <option value="Andere">Andere</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="age-min">Mindestalter:</label>
+                <input type="number" id="age-min" name="age-min" min="18">
+            </div>
+
+            <div>
+                <label for="age-max">Höchstalter:</label>
+                <input type="number" id="age-max" name="age-max">
+            </div>
+
+            <button type="submit">Filtern</button>
+        </form>
+
+        <div class="user-list">
+            </div>
+            <button onclick="history.back()">Zurück</button>
+
+    </div>
+    
+
+    <script>
+        const filterForm = document.getElementById('filter-form');
+        const userListDiv = document.querySelector('.user-list');
+
+        // Optional: Wenn du den Like-Status direkt auf der Filterseite anzeigen willst
+        let likedUserIds = new Set(); // Initialisiere ein leeres Set
+
+        filterForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const gender = filterForm.gender.value;
+            const ageMin = filterForm['age-min'].value;
+            const ageMax = filterForm['age-max'].value;
+
+            const queryParams = new URLSearchParams();
+            if (gender) queryParams.append('gender', gender);
+            if (ageMin) queryParams.append('ageMin', ageMin);
+            if (ageMax) queryParams.append('ageMax', ageMax);
+
+            const url = `/filter-results?${queryParams.toString()}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const users = data.users;
+                if (data.likedUserIds) {
+                    likedUserIds = new Set(data.likedUserIds); // Aktualisiere likedUserIds
+                }
+
+
+                if (response.ok) {
+                    displayUsers(users);
+                } else {
+                    console.error('Fehler beim Abrufen der gefilterten Benutzer.');
+                }
+            } catch (error) {
+                console.error('Fehler:', error);
+            }
+        });
+
+        function displayUsers(users) {
+    userListDiv.innerHTML = '';
+    if (users.length === 0) {
+        userListDiv.innerHTML = '<p>Keine Benutzer gefunden.</p>';
+        return;
+    }
+
+    users.forEach(user => {
+        const userCard = document.createElement('div');
+        userCard.classList.add('user-card');
+        let imageHtml = '';
+        if (user.image) {
+            imageHtml = `<img src="${user.image}" alt="Profilbild" class="user-image">`;
+        } else {
+            imageHtml = `<img src="/default-avatar.png" alt="Kein Profilbild" class="user-image">`;
+        }
+        userCard.innerHTML = `
+            <div class="user-image-container">
+                ${imageHtml}
+            </div>
+            <div class="user-info">
+                <p>Benutzername: ${user.username}</p>
+                <p>Geschlecht: ${user.gender}</p>
+                <p>Alter: ${calculateAge(user.birthday)}</p>
+            </div>
+            <div class="user-actions">
+                <button class="like-button ${likedUserIds.has(user.id) ? 'liked' : ''}" data-user-id="${user.id}" onclick="toggleLike(this)">
+                    ${likedUserIds.has(user.id) ? '❤️ Entlike' : '❤️ Like'}
+                </button>
+            </div>
+        `;
+        userListDiv.appendChild(userCard);
+    });
+}
+
+        async function toggleLike(button) {
+            const likedId = button.dataset.userId;
+            try {
+                const method = likedUserIds.has(likedId) ? 'DELETE' : 'POST';
+                const url = likedUserIds.has(likedId) ? '/dislike' : '/like';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ likedId: likedId })
+                });
+
+                if (response.ok) {
+                    if (likedUserIds.has(likedId)) {
+                        likedUserIds.delete(likedId);
+                        button.classList.remove('liked');
+                        button.textContent = '❤️ Like';
+                    } else {
+                        likedUserIds.add(likedId);
+                        button.classList.add('liked');
+                        button.textContent = '❤️ Entlike';
+                    }
+                } else {
+                    console.error('Failed to toggle like.');
+                }
+            } catch (error) {
+                console.error('Error toggling like:', error);
+            }
+        }
+
+        async function dislikeUser(button) {
+            const likedId = button.dataset.userId;
+            try {
+                const response = await fetch('/dislike', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ likedId: likedId })
+                });
+
+                if (response.ok) {
+                    console.log('User disliked successfully!');
+                } else {
+                    console.error('Failed to dislike user.');
+                }
+            } catch (error) {
+                console.error('Error disliking user:', error);
+            }
+        }
+
+        function calculateAge(birthday) {
+            if (!birthday) return 'Nicht angegeben';
+            const birthDate = new Date(birthday);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+    </script>
+</body>
+
+</html>

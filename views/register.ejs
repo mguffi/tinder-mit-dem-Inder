@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registrieren</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+</head>
+
+<body>
+    <h1>Registrieren</h1>
+
+    <% if (error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
+
+    <form action="/register" method="POST">
+        <div>
+            <label for="username">Benutzername:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div>
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <label for="gender">Geschlecht:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Bitte wählen</option>
+                <option value="Männlich">Männlich</option>
+                <option value="Weiblich">Weiblich</option>
+                <option value="Andere">Andere</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="birthday">Geburtstag:</label>
+            <input type="date" id="birthday" name="birthday" required>
+        </div>
+
+        <div>
+            <label for="image">Profilbild-URL:</label>
+            <input type="text" id="image" name="image" required>
+            <small>Gib hier die URL eines Bildes ein.</small>
+        </div>
+
+        <button type="submit">Registrieren</button>
+    </form>
+
+    <p>Bereits ein Konto? <a href="/">Anmelden</a></p>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meine Chats</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <style>
+        /* Grundlegendes Styling (anpassbar) */
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .chat-overview {
+            margin-top: 20px;
+        }
+
+        .chat-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between; /* Verteilt Elemente horizontal */
+            align-items: center; /* Zentriert Elemente vertikal */
+            cursor: pointer;
+        }
+
+        .chat-card:hover {
+            background-color: #f0f0f0;
+        }
+
+        .other-user-info {
+            flex: 1; /* Nimmt den meisten Platz ein */
+        }
+
+        .last-message {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .chat-time {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meine Chats</h1>
+
+    <div class="chat-overview">
+        <% if (chats && chats.length > 0) { %>
+            <% chats.forEach(chat => { %>
+                <div class="chat-card" onclick="location.href='/chat/<%= chat.otherUserId %>/<%= myUserId %>'">
+                    <div class="other-user-info">
+                        <strong>Chat mit: <%= chat.otherUsername %></strong>
+                        <p class="last-message">
+                            <%= chat.lastMessage ? chat.lastMessage : 'Keine Nachrichten' %>
+                        </p>
+                    </div>
+                    <small class="chat-time"><%= chat.lastMessageCreatedAt %></small>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>Du hast noch keine aktiven Chats.</p>
+        <% } %>
+    </div>
+
+    <a href="/dashboard">Zurück zum Dashboard</a>
+</body>
+</html>

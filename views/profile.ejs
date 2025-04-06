@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profil</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Profil</h1>
+        <div class="profile-container">
+            <% if (user) { %>
+                <img src="<%= user.image %>" alt="Profilbild" class="profile-image">
+                <div class="profile-info">
+                    <p>Benutzername: <%= user.username %></p>
+                    <p>Geschlecht: <%= user.gender %></p>
+                    <p>Geburtstag: <%= user.birthday ? user.birthday.toISOString().split('T')[0] : 'Nicht angegeben' %></p>
+                </div>
+                <div class="profile-actions">
+                    <a href="/dashboard">Zurück zum Dashboard</a>
+                    </div>
+            <% } else { %>
+                <p>Benutzerdaten konnten nicht geladen werden.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

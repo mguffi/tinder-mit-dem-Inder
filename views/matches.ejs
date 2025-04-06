@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+
+    
+    <style>
+        /* Grundlegendes Styling */
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .matches-list {
+            margin-top: 20px;
+        }
+
+        .match-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .match-image {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Deine Matches</h1>
+
+    <div class="matches-list">
+        <% if (matches && matches.length > 0) { %>
+            <% matches.forEach(match => { %>
+                <div class="match-card">
+                    <% if (match.image) { %>
+                        <img src="<%= match.image %>" alt="Profilbild" class="match-image">
+                    <% } else { %>
+                        <p>Kein Profilbild vorhanden</p>
+                    <% } %>
+                    <p>Benutzername: <%= match.username %></p>
+                    <p>Geschlecht: <%= match.gender %></p>
+                    <p>Alter: <%= match.birthday ? match.birthday.toISOString().split('T')[0] : 'Nicht angegeben' %></p>
+                    <a href="/chat/<%= match.id %>/<%= myUserId %>">Chat starten</a>
+                    </div>
+            <% }); %>
+        <% } else { %>
+            <p>Du hast noch keine Matches.</p>
+        <% } %>
+    </div>
+
+    <a href="/dashboard">Zurück zum Dashboard</a>
+</body>
+<button onclick="history.back()">Zurück</button>
+
+</html>

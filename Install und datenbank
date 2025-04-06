@@ -1,0 +1,114 @@
+
+
+sudo apt update
+npm install express-session
+ npm install socket.io
+npm install moment
+sudo apt install -y mysql-server
+sudo service mysql start
+sudo mysql
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'Markus1996';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, INDEX ON your_app_db.* TO 'root'@'localhost';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Markus1996';
+FLUSH PRIVILEGES;
+EXIT;
+sudo usermod -a -G mysql $USER
+sudo chmod o+rx /var/run/mysqld/
+mysql -u root -p
+
+
+create database name;
+use name;
+CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,username VARCHAR(50) NOT NULL UNIQUE,password VARCHAR(255), gender VARCHAR(50), Birthday VARCHAR(50), Image VARCHAR(255));
+
+exit;
+
+sudo service mysql start
+mysql -u root -p
+
+use name;
+
+CREATE TABLE likes (
+    liker_id INT NOT NULL,
+    liked_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (liker_id, liked_id),
+    FOREIGN KEY (liker_id) REFERENCES users(id),
+    FOREIGN KEY (liked_id) REFERENCES users(id)
+);
+
+
+INSERT INTO users (username, password, gender, birthday, image) VALUES
+('John','password123', 'Männlich', '1995-09-17', 'https://xsgames.co/randomusers/assets/avatars/male/1.jpg'),
+('Paul', 'password123', 'Männlich', '1992-08-04', 'https://xsgames.co/randomusers/assets/avatars/male/2.jpg'),
+('Mike','password123', 'Männlich', '1991-01-03', 'https://xsgames.co/randomusers/assets/avatars/male/3.jpg'),
+('Dean','password123', 'Männlich', '1979-12-07', 'https://xsgames.co/randomusers/assets/avatars/male/4.jpg'),
+('James','password123', 'Männlich', '1993-04-14', 'https://xsgames.co/randomusers/assets/avatars/male/5.jpg'),
+('Robert','password123', 'Männlich', '1979-07-14', 'https://xsgames.co/randomusers/assets/avatars/male/6.jpg'),
+('William','password123', 'Männlich', '1980-01-17', 'https://xsgames.co/randomusers/assets/avatars/male/7.jpg'),
+('Mark','password123', 'Männlich', '1983-01-10', 'https://xsgames.co/randomusers/assets/avatars/male/8.jpg'),
+('Thomas','password123', 'Männlich', '1984-10-25', 'https://xsgames.co/randomusers/assets/avatars/male/9.jpg'),
+('Joseph','password123', 'Männlich', '1995-04-08', 'https://xsgames.co/randomusers/assets/avatars/male/10.jpg'),
+('Charles','password123', 'Männlich', '1988-12-19', 'https://xsgames.co/randomusers/assets/avatars/male/11.jpg'),
+('Daniel','password123', 'Männlich', '1982-02-12', 'https://xsgames.co/randomusers/assets/avatars/male/12.jpg'),
+('Matthew','password123', 'Männlich', '1988-12-04', 'https://xsgames.co/randomusers/assets/avatars/male/13.jpg'),
+('Joshua','password123', 'Männlich', '1986-12-03', 'https://xsgames.co/randomusers/assets/avatars/male/14.jpg'),
+('Ethan','password123', 'Männlich', '1986-09-13', 'https://xsgames.co/randomusers/assets/avatars/male/15.jpg'),
+('Christopher','password123', 'Männlich', '1970-09-20', 'https://xsgames.co/randomusers/assets/avatars/male/16.jpg'),
+('Anthony','password123', 'Männlich', '1990-09-24', 'https://xsgames.co/randomusers/assets/avatars/male/17.jpg'),
+('Steven','password123', 'Männlich', '1983-09-25', 'https://xsgames.co/randomusers/assets/avatars/male/18.jpg'),
+('Andrew','password123', 'Männlich', '1982-10-01', 'https://xsgames.co/randomusers/assets/avatars/male/19.jpg'),
+('George','password123', 'Männlich', '1990-03-26', 'https://xsgames.co/randomusers/assets/avatars/male/20.jpg'),
+('Kevin','password123', 'Männlich', '1981-09-08', 'https://xsgames.co/randomusers/assets/avatars/male/21.jpg'),
+('Brian','password123', 'Männlich', '1978-01-21', 'https://xsgames.co/randomusers/assets/avatars/male/22.jpg'),
+('Aaron','password123', 'Männlich', '1998-10-18', 'https://xsgames.co/randomusers/assets/avatars/male/23.jpg'),
+('Henry','password123', 'Männlich', '1980-01-02', 'https://xsgames.co/randomusers/assets/avatars/male/24.jpg'),
+('Jack','password123', 'Männlich', '1995-03-06', 'https://xsgames.co/randomusers/assets/avatars/male/25.jpg'),
+('Samuel','password123', 'Männlich', '1991-04-03', 'https://xsgames.co/randomusers/assets/avatars/male/26.jpg'),
+('Dangel','password123', 'Männlich', '1994-03-24', 'https://xsgames.co/randomusers/assets/avatars/male/27.jpg'),
+('Richard','password123', 'Männlich', '1985-02-24', 'https://xsgames.co/randomusers/assets/avatars/male/28.jpg'),
+('Benjamin','password123', 'Männlich', '1999-04-03', 'https://xsgames.co/randomusers/assets/avatars/male/29.jpg'),
+('David','password123', 'Männlich', '1992-11-04', 'https://xsgames.co/randomusers/assets/avatars/male/30.jpg'),
+('Mary','password123', 'Weiblich', '1986-02-12', 'https://xsgames.co/randomusers/assets/avatars/female/1.jpg'),
+('Jennifer','password123', 'Weiblich', '2000-10-18', 'https://xsgames.co/randomusers/assets/avatars/female/2.jpg'),
+('Linda','password123', 'Weiblich', '1998-10-26', 'https://xsgames.co/randomusers/assets/avatars/female/3.jpg'),
+('Patricia','password123', 'Weiblich', '1990-02-04', 'https://xsgames.co/randomusers/assets/avatars/female/4.jpg'),
+('Elizabeth','password123', 'Weiblich', '1989-09-14', 'https://xsgames.co/randomusers/assets/avatars/female/5.jpg'),
+('Susan','password123', 'Weiblich', '1972-01-18', 'https://xsgames.co/randomusers/assets/avatars/female/6.jpg'),
+('Jessica','password123', 'Weiblich', '1972-03-21', 'https://xsgames.co/randomusers/assets/avatars/female/7.jpg'),
+('Sarah','password123', 'Weiblich', '1976-12-27', 'https://xsgames.co/randomusers/assets/avatars/female/8.jpg'),
+('Karen','password123', 'Weiblich', '1985-01-01', 'https://xsgames.co/randomusers/assets/avatars/female/9.jpg'),
+('Nancy','password123', 'Weiblich', '1973-06-14', 'https://xsgames.co/randomusers/assets/avatars/female/10.jpg'),
+('Lisa','password123', 'Weiblich', '1975-11-22', 'https://xsgames.co/randomusers/assets/avatars/female/11.jpg'),
+('Betty','password123', 'Weiblich', '1972-11-14', 'https://xsgames.co/randomusers/assets/avatars/female/12.jpg'),
+('Helen','password123', 'Weiblich', '1998-10-26', 'https://xsgames.co/randomusers/assets/avatars/female/13.jpg'),
+('Sandra','password123', 'Weiblich', '1996-01-03', 'https://xsgames.co/randomusers/assets/avatars/female/14.jpg'),
+('Ashley','password123', 'Weiblich', '1972-01-14', 'https://xsgames.co/randomusers/assets/avatars/female/15.jpg'),
+('Meegan','password123', 'Weiblich', '1999-11-11', 'https://xsgames.co/randomusers/assets/avatars/female/16.jpg'),
+('Ruth','password123', 'Weiblich', '1992-10-02', 'https://xsgames.co/randomusers/assets/avatars/female/17.jpg'),
+('Sharon','password123', 'Weiblich', '1970-08-23', 'https://xsgames.co/randomusers/assets/avatars/female/18.jpg'),
+('Cynthia','password123', 'Weiblich', '1994-11-18', 'https://xsgames.co/randomusers/assets/avatars/female/19.jpg'),
+('Angela','password123', 'Weiblich', '1987-10-24', 'https://xsgames.co/randomusers/assets/avatars/female/20.jpg'),
+('Margaret','password123', 'Weiblich', '1981-07-28', 'https://xsgames.co/randomusers/assets/avatars/female/21.jpg'),
+('Marie','password123', 'Weiblich', '1980-01-23', 'https://xsgames.co/randomusers/assets/avatars/female/22.jpg'),
+('Carol','password123', 'Weiblich', '1983-12-13', 'https://xsgames.co/randomusers/assets/avatars/female/23.jpg'),
+('Michelle','password123', 'Weiblich', '1994-01-26', 'https://xsgames.co/randomusers/assets/avatars/female/24.jpg'),
+('Dorothy','password123', 'Weiblich', '1997-07-19', 'https://xsgames.co/randomusers/assets/avatars/female/25.jpg'),
+('Amy','password123', 'Weiblich', '1994-03-28', 'https://xsgames.co/randomusers/assets/avatars/female/26.jpg'),
+('Emily','password123', 'Weiblich', '1970-02-17', 'https://xsgames.co/randomusers/assets/avatars/female/27.jpg'),
+('Joan','password123', 'Weiblich', '1979-08-22', 'https://xsgames.co/randomusers/assets/avatars/female/28.jpg'),
+('Martha','password123', 'Weiblich', '1997-07-13', 'https://xsgames.co/randomusers/assets/avatars/female/29.jpg'),
+('Grace','password123', 'Weiblich', '1993-05-07', 'https://xsgames.co/randomusers/assets/avatars/female/30.jpg');
+
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    conversation_id VARCHAR(255) NOT NULL, -- Neu: ID für die Konversation
+    FOREIGN KEY (sender_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_id) REFERENCES users(id),
+    INDEX idx_conversation_created_at (conversation_id, created_at) -- Index für effizientes Abrufen
+);

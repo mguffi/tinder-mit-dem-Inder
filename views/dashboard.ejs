@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <button onclick="location.href='/logout'">Abmelden</button>
+    <h1>Willkommen im Dashboard!</h1>
+    <p>Hier ist die Übersicht über deine Optionen:</p>
+    <ul>
+        <li><a href="/profile">Profil</a></li>
+        <li><a href="/people">People</a></li>
+        <li><a href="/filter">Filter</a></li>
+        <li><a href="/matches">Matches</a></li>
+        <li><a href="/my-chats">Meine Chats</a></li>  </ul>
+    <% if (username) { %>
+        <p>Angemeldet als: <%= username %></p>
+    <% } %>
+</body>
+</html>

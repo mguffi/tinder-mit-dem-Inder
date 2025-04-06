@@ -1,0 +1,103 @@
+
+        <script src="/socket.io/socket.io.js"></script>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Chat mit <%= otherUsername %></title>
+            <link rel="stylesheet" href="/style.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+            <style>
+                /* Spezifische Stile für die Chat-Seite (kannst du auch in style.css packen) */
+                #chat-messages {
+                    height: 400px;
+                    overflow-y: scroll;
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                }
+        
+                .message {
+                    padding: 8px 12px;
+                    margin-bottom: 8px;
+                    border-radius: 20px;
+                    clear: both;
+                }
+        
+                .sent {
+                    background-color: #dcf8c6;
+                    align-self: flex-end;
+                    float: right;
+                }
+        
+                .received {
+                    background-color: #fff;
+                    align-self: flex-start;
+                    float: left;
+                }
+        
+                .message-sender {
+                    font-weight: bold;
+                    margin-bottom: 3px;
+                }
+        
+                .message-time {
+                    font-size: 0.7em;
+                    color: #888;
+                    float: right;
+                    margin-top: 3px;
+                }
+        
+                #chat-form {
+                    display: flex;
+                    margin-top: 10px;
+                }
+        
+                #message-input {
+                    flex: 1;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 20px;
+                    margin-right: 5px;
+                }
+        
+                #chat-form button {
+                    padding: 8px 15px;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    border-radius: 20px;
+                    cursor: pointer;
+                }
+        
+                #chat-form button:hover {
+                    background-color: #0056b3;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Chat mit <%= otherUsername %></h1>
+            <div id="chat-messages">
+                <% if (chatHistory && chatHistory.length > 0) { %>
+                    <% chatHistory.forEach(message => { %>
+                        <div class="message <%= message.sender_id == myUserId ? 'sent' : 'received' %>">
+                            <strong class="message-sender">
+                                <%= message.sender_id == myUserId ? 'Du' : otherUsername %>:
+                            </strong>
+                            <%= message.message %>
+                            <small class="message-time"><%= message.created_at %></small>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>Keine Nachrichten in dieser Konversation.</p>
+                <% } %>
+            </div>
+            <form id="chat-form">
+                <input type="text" id="message-input" placeholder="Nachricht eingeben...">
+                <button type="submit">Senden</button>
+            </form>
+        
+            <script>
+                // ... (Dein JavaScript-Code) ...
+            </script>
+        </body>
+        </html>
